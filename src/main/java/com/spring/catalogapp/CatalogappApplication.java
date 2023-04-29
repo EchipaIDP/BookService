@@ -23,22 +23,6 @@ public class CatalogappApplication {
 			/***
 			 * Initializing MongoDB database connectivity
 			 */
-			System.out.println("before connection");
-            /*ConnectionString connectionString = new ConnectionString("mongodb+srv://user:user@hpetestcluster.ddqhjmn.mongodb.net/test?retryWrites=true&w=majority");
-            MongoClientSettings settings = MongoClientSettings.builder()
-                    .applyConnectionString(connectionString)
-                    .serverApi(ServerApi.builder()
-                            .version(ServerApiVersion.V1)
-                            .build())
-                    .build();
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("sample_airbnb");*/
-
-			System.out.println("after connection");
-			/***
-			 * Initial Adding
-			 */
-//			userService.users.add(new SiteUser("user", "user"));
 			productRepository.save(new Product(1L, "cabbage","vegetable", "dfgfdegdefgdfgdeg"));
 			productRepository.save(new Product(2L, "apple", "fruit", "gsfdgfdgdfg"));
 			productRepository.save(new Product(3L, "cherry", "fruit", "small red thingies"));
