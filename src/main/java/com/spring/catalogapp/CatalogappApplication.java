@@ -28,7 +28,7 @@ public class CatalogappApplication {
 			productRepository.save(new Product(3L, "cherry", "fruit", "small red thingies"));
 			productRepository.save(new Product(4L, "tomato", "vegetable", "weird red sphere"));
 
-			System.out.println(productRepository.findAll());
+//			System.out.println(productRepository.findAll());
 		};
 	}
 }

@@ -1,9 +1,12 @@
 package com.spring.catalogapp.controller;
 
+import com.spring.catalogapp.entity.LoginUser;
+import com.spring.catalogapp.service.LoginService;
 import com.spring.catalogapp.service.ProductService;
 import com.spring.catalogapp.entity.ReturnObject;
 import com.spring.catalogapp.entity.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,9 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    @Autowired
+    private final LoginService loginService;
+
 
     @GetMapping("/products.json")
     public ResponseEntity<ReturnObject> getProducts(@RequestParam int page, @RequestParam int size,
@@ -41,9 +47,19 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("products/modify")
+    @PutMapping("/products/modify")
     public ResponseEntity<?> modifyProduct(@RequestBody Product original) {
         productService.update(original);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginUser myuser) {
+        if (loginService.getMyUser() != null) {
+            System.out.println(loginService.getMyUser().getEmail());
+        }
+        loginService.setMyUser(myuser);
+        System.out.println(myuser.toString());
         return ResponseEntity.ok().build();
     }
 }
