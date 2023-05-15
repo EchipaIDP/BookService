@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.util.List;
 
 @ToString
-@JsonPropertyOrder({"token", "type", "id", "username, email, roles"})
+@JsonPropertyOrder({"token", "type", "id", "username", "email", "roles"})
 public class LoginUser {
 
     private String token;

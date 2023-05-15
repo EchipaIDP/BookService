@@ -14,7 +14,7 @@
 	<name>catalogapp</name>
 	<description>Spring app for catalog</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>18</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

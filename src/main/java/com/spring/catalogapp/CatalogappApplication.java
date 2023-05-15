@@ -17,18 +17,15 @@ public class CatalogappApplication {
 		SpringApplication.run(CatalogappApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner run(ProductService productService, ProductRepository productRepository) {
-		return args -> {
-			/***
-			 * Initializing MongoDB database connectivity
-			 */
-			productRepository.save(new Product(1L, "cabbage","vegetable", "dfgfdegdefgdfgdeg"));
-			productRepository.save(new Product(2L, "apple", "fruit", "gsfdgfdgdfg"));
-			productRepository.save(new Product(3L, "cherry", "fruit", "small red thingies"));
-			productRepository.save(new Product(4L, "tomato", "vegetable", "weird red sphere"));
-
-//			System.out.println(productRepository.findAll());
-		};
-	}
+//	@Bean
+//	CommandLineRunner run(ProductService productService, ProductRepository productRepository) {
+//		return args -> {
+//			productRepository.save(new Product(1L, "cabbage","vegetable", "dfgfdegdefgdfgdeg"));
+//			productRepository.save(new Product(2L, "apple", "fruit", "gsfdgfdgdfg"));
+//			productRepository.save(new Product(3L, "cherry", "fruit", "small red thingies"));
+//			productRepository.save(new Product(4L, "tomato", "vegetable", "weird red sphere"));
+//
+////			System.out.println(productRepository.findAll());
+//		};
+//	}
 }
