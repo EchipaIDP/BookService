@@ -31,13 +31,14 @@ public class ProductController {
                                                     @RequestParam String sortElem, @RequestParam String direction, @RequestParam String token) {
 
         if (loginService.getMyUser() == null) {
+            System.out.println("No user is authenticated!");
             return ResponseEntity.notFound().build();
         }
 
         if (!loginService.getMyUser().getToken().equals(token)) {
-            return ResponseEntity.notFound().build();
+            System.out.println("Invalid or missing token!");
+            return ResponseEntity.badRequest().build();
         }
-        System.out.println(token);
         return new ResponseEntity<>(productService.getProducts(page, size, sortElem, direction), HttpStatus.ACCEPTED);
     }
 
@@ -45,13 +46,16 @@ public class ProductController {
     public ResponseEntity<?> saveProduct(@RequestBody Product product, @RequestParam String token) {
         productService.extracted(product);
         if (loginService.getMyUser() == null) {
+            System.out.println("No user is authenticated!");
             return ResponseEntity.notFound().build();
         }
 
         if (!loginService.getMyUser().getToken().equals(token)) {
+            System.out.println("Invalid or missing token!");
             return ResponseEntity.notFound().build();
         }
         if (!loginService.getMyUser().getRoles().contains(ROLE_ADMIN)) {
+            System.out.println(String.format("User is missing admin rights for saving a product! Role required: %s", ROLE_ADMIN));
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
@@ -60,14 +64,17 @@ public class ProductController {
     @PostMapping("/products/filteredList")
     public ResponseEntity<ArrayList<Product>> filterList(@RequestBody Product product, @RequestParam String token) {
         if (loginService.getMyUser() == null) {
+            System.out.println("No user is authenticated!");
             return ResponseEntity.notFound().build();
         }
 
         if (!loginService.getMyUser().getToken().equals(token)) {
-            return ResponseEntity.notFound().build();
+            System.out.println("Invalid or missing token!");
+            return ResponseEntity.badRequest().build();
         }
         if (!loginService.getMyUser().getRoles().contains(ROLE_ADMIN)) {
-            return ResponseEntity.notFound().build();
+            System.out.println(String.format("User is missing admin rights for filtering products! Role required: %s", ROLE_ADMIN));
+            return ResponseEntity.badRequest().build();
         }
         return new ResponseEntity<>(productService.filter(product), HttpStatus.ACCEPTED);
     }
@@ -75,14 +82,17 @@ public class ProductController {
     @DeleteMapping("/products/delete/{productId}")
     public ResponseEntity<?> removeProduct(@PathVariable Long productId, @RequestParam String token) {
         if (loginService.getMyUser() == null) {
+            System.out.println("No user is authenticated!");
             return ResponseEntity.notFound().build();
         }
 
         if (!loginService.getMyUser().getToken().equals(token)) {
-            return ResponseEntity.notFound().build();
+            System.out.println("Invalid or missing token!");
+            return ResponseEntity.badRequest().build();
         }
         if (!loginService.getMyUser().getRoles().contains(ROLE_ADMIN)) {
-            return ResponseEntity.notFound().build();
+            System.out.println(String.format("User is missing admin rights for deleting a product! Role required: %s", ROLE_ADMIN));
+            return ResponseEntity.badRequest().build();
         }
         productService.delete(productId);
         return ResponseEntity.ok().build();
@@ -91,14 +101,17 @@ public class ProductController {
     @PutMapping("/products/modify")
     public ResponseEntity<?> modifyProduct(@RequestBody Product original, @RequestParam String token) {
         if (loginService.getMyUser() == null) {
+            System.out.println("No user is authenticated!");
             return ResponseEntity.notFound().build();
         }
 
         if (!loginService.getMyUser().getToken().equals(token)) {
-            return ResponseEntity.notFound().build();
+            System.out.println("Invalid or missing token!");
+            return ResponseEntity.badRequest().build();
         }
         if (!loginService.getMyUser().getRoles().contains(ROLE_ADMIN)) {
-            return ResponseEntity.notFound().build();
+            System.out.println(String.format("User is missing admin rights for modifying a product! Role required: %s", ROLE_ADMIN));
+            return ResponseEntity.badRequest().build();
         }
         productService.update(original);
         return ResponseEntity.ok().build();
@@ -106,11 +119,9 @@ public class ProductController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginUser myuser) {
-        if (loginService.getMyUser() != null) {
-            System.out.println(loginService.getMyUser().getEmail());
-        }
+        
         loginService.setMyUser(myuser);
-        System.out.println(myuser.toString());
+        System.out.println(String.format("Logged in with user: %s with roles %s", loginService.getMyUser().getUsername(), loginService.getMyUser().getRoles().toString()));
         return ResponseEntity.ok().build();
     }
 }
