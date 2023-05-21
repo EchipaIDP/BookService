@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class CatalogappApplication {
 
 	public static void main(String[] args) {
+		// Start point of the app
 		SpringApplication.run(CatalogappApplication.class, args);
 	}
 }
