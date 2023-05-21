@@ -54,10 +54,6 @@ public class ProductController {
             System.out.println("Invalid or missing token!");
             return ResponseEntity.notFound().build();
         }
-        if (!loginService.getMyUser().getRoles().contains(ROLE_ADMIN)) {
-            System.out.println(String.format("User is missing admin rights for saving a product! Role required: %s", ROLE_ADMIN));
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().build();
     }
 
@@ -70,10 +66,6 @@ public class ProductController {
 
         if (!loginService.getMyUser().getToken().equals(token)) {
             System.out.println("Invalid or missing token!");
-            return ResponseEntity.badRequest().build();
-        }
-        if (!loginService.getMyUser().getRoles().contains(ROLE_ADMIN)) {
-            System.out.println(String.format("User is missing admin rights for filtering products! Role required: %s", ROLE_ADMIN));
             return ResponseEntity.badRequest().build();
         }
         return new ResponseEntity<>(productService.filter(product), HttpStatus.ACCEPTED);
@@ -90,10 +82,6 @@ public class ProductController {
             System.out.println("Invalid or missing token!");
             return ResponseEntity.badRequest().build();
         }
-        if (!loginService.getMyUser().getRoles().contains(ROLE_ADMIN)) {
-            System.out.println(String.format("User is missing admin rights for deleting a product! Role required: %s", ROLE_ADMIN));
-            return ResponseEntity.badRequest().build();
-        }
         productService.delete(productId);
         return ResponseEntity.ok().build();
     }
@@ -107,10 +95,6 @@ public class ProductController {
 
         if (!loginService.getMyUser().getToken().equals(token)) {
             System.out.println("Invalid or missing token!");
-            return ResponseEntity.badRequest().build();
-        }
-        if (!loginService.getMyUser().getRoles().contains(ROLE_ADMIN)) {
-            System.out.println(String.format("User is missing admin rights for modifying a product! Role required: %s", ROLE_ADMIN));
             return ResponseEntity.badRequest().build();
         }
         productService.update(original);
